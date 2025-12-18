@@ -6,7 +6,7 @@ const GH_HISTORY = "history";
 const GH_TOKEN = "REPLACE_WITH_TOKEN";
 
 function generate(){
-    let required = ['name','amount','paymentfor','standard'];
+    let required = ['studentname','amount','paymentfor','standard'];
     let ok = true;
 
     required.forEach(id=>{
