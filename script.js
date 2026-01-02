@@ -110,16 +110,24 @@ let historyIndex = 0;
 const PAGE_SIZE = 5;
 
 async function openHistory() {
-    const year = new Date().getFullYear();
+    const currentYear = new Date().getFullYear();
+    const lastYear = (new Date().getFullYear()) -1;
     const panel = document.getElementById("historyPanel");
 
     panel.innerHTML = "Loading...";
     panel.style.display = "block";
 
-    const res = await fetch(
-        `https://bombay-classes-api.ahmedgaziyani.workers.dev/history/${year}`
-    );
-    const data = await res.json();
+    //const res = await fetch(
+        //`https://bombay-classes-api.ahmedgaziyani.workers.dev/history/${year}`
+    //);
+    const [currentRes, lastRes] = await Promise.all([
+    fetch(`https://bombay-classes-api.ahmedgaziyani.workers.dev/history/${currentYear}`),
+    fetch(`https://bombay-classes-api.ahmedgaziyani.workers.dev/history/${lastYear}`)
+     ]);
+    const currentData = await currentRes.json();
+    const lastData = await lastRes.json();
+    const combinedData = [...lastData, ...currentData];
+    const data = combinedData;
 
     // latest first
     fullHistory = data.reverse();
